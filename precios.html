@@ -5,14 +5,16 @@
     <meta charset="utf-8"/>
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700|Allerta' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" href="css/invie.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
   </head>
-  <body>
+  <body class="precios">
     <header id="header" class="header background"> <!-- header -->
       <div class="contenedor">
         <figure class="logotipo"> <!-- logotipo -->
           <img src="images/invie.png" width="186" height="60" alt="Invie logotipo"/>
         </figure>
-        <nav class="menu"> <!-- menu -->
+        <span class="burguer-button icon-menu" id="burguer-button"></span>
+        <nav class="menu" id="menu"> <!-- menu -->
           <ul>
             <li>
               <a href="index.html">Home</a>
@@ -29,41 +31,42 @@
     </header>
     <section class="tabla">
       <div class="contenedor">
-        <table>
+        <table class="tablaPrecios" >
+        <caption> <h2>Precios</h2></caption>
           <thead>
             <tr>
               <th>Modelo</th>
               <th>Precio</th>
               <th>Descripción</th>
-              <th>Modelo</th>
-              <th>Precio</th>
-              <th>Descripción</th>
+              <th>Categoria</th>
+              <th>Precio Promo</th>
+              <th>Imagen</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>Invie classic</td>
-              <td>$100000</td>
-              <td>Una guitarra muy pro</td>
-              <td>Invie classic</td>
-              <td>$100000</td>
-              <td>Una guitarra muy pro</td>
+              <td data-label="Modelo" >Invie classic</td>
+              <td data-label="Precio"  >$100000</td>
+              <td data-label="Descripción"  >Una guitarra muy pro</td>
+              <td data-label="Categoria"  >Invie classic</td>
+              <td data-label="Precio Promo"  >$100000</td>
+              <td data-label="Imagen" ><img  data-src="images/invie-acoustic-guitar.png"  alt="Guitarra" width="150" ></td>
+            </tr>
+             <tr>
+              <td data-label="Modelo" >Invie classic</td>
+              <td data-label="Precio"  >$100000</td>
+              <td data-label="Descripción"  >Una guitarra muy pro</td>
+              <td data-label="Categoria"  >Invie classic</td>
+              <td data-label="Precio Promo"  >$100000</td>
+              <td data-label="Imagen" ><img  data-src="images/invie-rock-guitar.png"  alt="Guitarra Invie Acustica" width="150" ></td>
             </tr>
             <tr>
-              <td>Invie classic</td>
-              <td>$100000</td>
-              <td>Una guitarra muy pro</td>
-              <td>Invie classic</td>
-              <td>$100000</td>
-              <td>Una guitarra muy pro</td>
-            </tr>
-            <tr>
-              <td>Invie classic</td>
-              <td>$100000</td>
-              <td>Una guitarra muy pro</td>
-              <td>Invie classic</td>
-              <td>$100000</td>
-              <td>Una guitarra muy pro</td>
+              <td data-label="Modelo" >Invie classic</td>
+              <td data-label="Precio"  >$100000</td>
+              <td data-label="Descripción"  >Una guitarra muy pro</td>
+              <td data-label="Categoria"  >Invie classic</td>
+              <td data-label="Precio Promo"  >$100000</td>
+              <td data-label="Imagen" ><img  data-src="images/invie-rock-guitar.jpg"  alt="Guitarra Invie Acustica" width="150" ></td>
             </tr>
           </tbody>
         </table>
@@ -113,5 +116,95 @@
         </form>
       </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blazy/1.5.4/blazy.min.js"></script>
+    <script>
+      var consulta = window.matchMedia('(max-width: 500px)');
+      consulta.addListener(mediaQuery);
+
+      var $burguerButton = document.getElementById('burguer-button');
+      var $menu = document.getElementById('menu');
+      function toggleMenu(){
+        $menu.classList.toggle('active')
+      };
+
+      function mediaQuery() {
+        if (consulta.matches) {
+          // si se cumple hagamos esto
+          console.log('se cumplió la condicion');
+          $burguerButton.addEventListener('touchstart', toggleMenu);
+        } else {
+          $burguerButton.removeEventListener('touchstart', toggleMenu);
+          // si no se cumple hagamos esto
+          console.log('no se cumplió la condicion');
+        }
+      }
+      mediaQuery();
+
+      // lazy loading
+      var bLazy = new Blazy({
+          selector: 'img'
+      });
+      // $burguerButton.addEventListener('touchstart', toggleMenu);
+
+      // function toggleMenu(){
+      //   $menu.classList.toggle('active')
+      // };
+    </script>
+  <!-- Estilos tabla responsive precios-->
+    <style>
+     @media screen and (max-width: 800px) {
+    
+    /* Desaparecer el header */
+      table.tablaPrecios thead, th {
+         border: none;
+         clip: rect(0, 0, 0, 0);
+         height: 1px;
+         margin: -1px;
+         overflow: hidden;
+         padding: 0;
+         position: absolute;
+         width: 1px;
+      }
+
+      /* Cada celda ocupa todo el ancho 
+       de la tabla */
+
+       table.tablaPrecios tr{
+         border-bottom: 3px solid; 
+       }
+
+       table.tablaPrecios td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: 1.2em;
+        text-align: right;
+        padding: 10px;
+      }
+
+      table.tablaPrecios td:not(:last-child):before{
+        content: attr(data-label);
+        float: left;
+        color: #273b47;
+        font-weight: bold;
+        font-size: 1em;
+        padding: 1px 5px;
+      }
+
+      table.tablaPrecios td:last-child{
+         text-align: center;
+      }
+      
+      .tabla {
+        margin: 0;
+      }
+
+      img{
+        width: 50%;
+      }
+
+
+   }
+   </style>
+
   </body>
 </html>
